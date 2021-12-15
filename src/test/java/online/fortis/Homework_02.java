@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -11,11 +13,11 @@ public class Homework_02 {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.startMaximized = true;
+        Configuration.browserSize = "1920x1080";
     }
 
     @Test
-    void fillPracticeFormTests(){
+    void fillPracticeFormTests() {
     // открываем сайт
         open("https://demoqa.com/automation-practice-form");
     // заполняем имя
@@ -25,21 +27,22 @@ public class Homework_02 {
     // заполняем почту
         $("#userEmail").setValue("test@test.ru");
     // выбираем пол
-        $("#gender-radio-3").selectRadio(By.name("sex"), "Other");;
+        $("[for='gender-radio-3']").click();
     // заполняем телефон
         $("#userNumber").setValue("9991234567");
     // выбираем дату рождения
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("August");
         $(".react-datepicker__year-select").selectOption("1986");
-        //$(".react-datepicker__day").setValue("12");
-        $("aria-label=\"Choose Tuesday, August 12th, 1986\"").setValue("12");
+        $(".react-datepicker__day--012").click();
     // заполняем subjects
-        $("#subjectsInput").setValue("Blablabla");
+        $("#subjectsInput").setValue("English").pressEnter();
     // выбираем хобби
-       // $("#hobbies-checkbox-3").click();
+        $("[for=hobbies-checkbox-1]").click();
+        $("[for=hobbies-checkbox-3]").click();
     // загружаем файл
-       //$("#uploadPicture").click();
+        File file = new File("src/test/resources/Glazov.txt");
+        $("input[id='uploadPicture']").uploadFile(file);
     // заполняем адрес
         $("#currentAddress").setValue("СurrentAddress");
     // выбираем штат
